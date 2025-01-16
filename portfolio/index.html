@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --space-primary: #2d3bff;
+            --space-secondary: #7000ff;
+            --space-accent: #00e5ff;
+            --space-dark: #0a1128;
+            --space-light: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--space-dark);
+            color: var(--space-light);
+            overflow-x: hidden;
+        }
+
+        /* Particle Animation */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--space-accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        .navbar {
+            background: rgba(10, 17, 40, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-link {
+            color: var(--space-light) !important;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--space-primary), var(--space-accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        .hero {
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(45, 59, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(0, 229, 255, 0.15) 0%, transparent 40%),
+                var(--space-dark);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .glowing-text {
+            text-shadow: 0 0 10px var(--space-accent),
+                         0 0 20px var(--space-accent),
+                         0 0 30px var(--space-primary);
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, 
+                rgba(0, 229, 255, 0.1) 0%,
+                transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .tag {
+            background: linear-gradient(45deg, 
+                rgba(45, 59, 255, 0.2),
+                rgba(0, 229, 255, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--space-light);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 0.25rem;
+        }
+
+        .tag:hover {
+            background: linear-gradient(45deg,
+                rgba(45, 59, 255, 0.4),
+                rgba(0, 229, 255, 0.4));
+            transform: translateY(-2px);
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--space-light);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.5rem;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-link:hover {
+            background: linear-gradient(45deg,
+                var(--space-primary),
+                var(--space-accent));
+            transform: translateY(-5px) rotate(360deg);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg,
+                var(--space-primary),
+                var(--space-accent));
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg,
+                var(--space-primary),
+                var(--space-accent));
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--space-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--space-primary),
+                var(--space-accent));
+            border-radius: 5px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(var(--space-primary),
+                var(--space-accent));
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand text-light" href="#" data-aos="fade-right">YASHU RAJ GUPTA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item" data-aos="fade-left" data-aos-delay="100">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item" data-aos="fade-left" data-aos-delay="200">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item" data-aos="fade-left" data-aos-delay="300">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item" data-aos="fade-left" data-aos-delay="400">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content text-center">
+            <h1 class="display-4 mb-4 glowing-text" data-aos="zoom-in">TECH ENTHUSIAST</h1>
+            <p class="lead mb-5" data-aos="zoom-in" data-aos-delay="200">Building innovative solutions with modern technologies</p>
+            <div data-aos="fade-up" data-aos-delay="400">
+                <a href="#about" class="btn btn-outline-light btn-lg me-3">About Me</a>
+                <a href="#projects" class="btn btn-outline-info btn-lg">View Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5" data-aos="fade-up">About Me</h2>
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="fade-right">
+                    <div class="about-card">
+                        <h3 class="mb-4">Who I Am</h3>
+                        <p>I'm a passionate third-year Electronics and Communication Engineering student with a keen interest in full-stack development and machine learning. My journey in tech started with simple programming exercises and has evolved into building complex applications that solve real-world problems.</p>
+                        <p>Currently pursuing my degree at a Sathyabama college, I've taken initiative to learn beyond the curriculum through online courses, hackathons, and personal projects.</p>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <div class="about-card">
+                        <h3 class="mb-4">Education & Experience</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-content">
+                                    <h5>B.Tech in Electronics and Communication</h5>
+                                    <p>2021 - Present</p>
+                                    <p>Currently maintaining a strong academic record while actively participating in technical clubs and events.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-content">
+                                    <h5>Software Development Intern</h5>
+                                    <p>Summer 2024</p>
+                                    <p>Developed various applications including calculator, password generator, and to-do , IOT managaement Dashboard.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Projects Section -->
+<!-- Projects Section -->
+<section id="projects" class="py-5 bg-dark">
+  <div class="container">
+      <h2 class="section-title text-center text-light mb-5" data-aos="fade-up">My Projects</h2>
+      <div class="row g-4">
+          <!-- Project 1: Sexual Harassment Detection using ML -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+              <div class="project-card">
+                  <h3 class="mb-3">Sexual Harassment Detection using ML for NIT Trichy</h3>
+                  <p>This machine learning-based solution uses NLP and sentiment analysis to detect and flag instances of potential sexual harassment in online platforms. The project was developed for NIT Trichy’s tech team, focusing on providing a safe digital environment for students.</p>
+                  <div>
+                      <span class="tag">Python</span>
+                      <span class="tag">Machine Learning</span>
+                      <span class="tag">Natural Language Processing (NLP)</span>
+                  </div>
+                  <a href="https://github.com/YOGESWARAN112004/TRINIT_NeuralNinjas_ML" class="btn btn-outline-info mt-3 project-btn" target="_blank">View Project</a>
+              </div>
+          </div>
+          
+          <!-- Project 2: Waste Management Website -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+              <div class="project-card">
+                  <h3 class="mb-3">Waste Management Website</h3>
+                  <p>A web application designed to optimize waste collection, sorting, and recycling. The platform helps users request waste pickups, track recycling progress, and maintain sustainability practices in urban areas.</p>
+                  <div>
+                      <span class="tag">React</span>
+                      <span class="tag">Node.js</span>
+                      <span class="tag">MongoDB</span>
+                      <span class="tag">Express</span>
+                  </div>
+                  <a href="https://github.com/Codex-Naman/Waste-Management-And-co" class="btn btn-outline-info mt-3 project-btn" target="_blank">View Project</a>
+              </div>
+          </div>
+
+          <!-- Project 3: Health Monitoring Website -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+              <div class="project-card">
+                  <h3 class="mb-3">IOT Management Dashboard</h3>
+                  <p>An IoT Management Dashboard is a central platform for monitoring and controlling IoT devices in real-time. It displays device data like temperature and humidity in easy-to-understand charts, sends alerts for critical conditions, and allows remote control of devices. The dashboard also supports user management with different access roles, making it ideal for smart homes, healthcare, and industrial applications.</p>
+                  <div>
+                      <span class="tag">HTML</span>
+                      <span class="tag">CSS</span>
+                      <span class="tag">JavaScript</span>
+                      <span class="tag">API Integration</span>
+                  </div>
+                  <a href="https://github.com/Codex-Naman/IOT-Management-Dashboard" class="btn btn-outline-info mt-3 project-btn" target="_blank">View Project</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- Custom CSS for Hover Effect on Button -->
+<style>
+  .project-btn {
+    position: relative;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: 2px solid #00e5ff;
+    border-radius: 5px;
+    color: #00e5ff;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .project-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 229, 255, 0.2);
+    border-radius: 5px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .project-btn:hover::before {
+    opacity: 1;
+  }
+
+  .project-btn:hover {
+    background-color: #00e5ff;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+    transform: scale(1.05);
+  }
+</style>
+
+            
+            <!-- Achievement Section -->
+            <div class="row mt-5">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="about-card">
+                        <h3 class="mb-4">Achievements & Certifications</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">🏆 Winner at NIT Trichy Hackathon - ML Model for Content Moderation</li>
+                            <li class="mb-3">📝 Published technical articles on web development and ML</li>
+                            <li class="mb-3">🌟 Active contributor to open-source projects</li>
+                            <li class="mb-3">💻 Completed various certifications in Full Stack Development and ML</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Add Font Awesome CDN in the <head> section -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Skills Section -->
+<section id="skills" class="py-5 bg-dark text-light">
+  <div class="container">
+      <h2 class="section-title text-center mb-5" data-aos="fade-up">My Skills</h2>
+      <div class="row">
+          
+          <!-- Skill 1: Frontend Development -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+              <div class="skill-card text-center" style="background: linear-gradient(135deg, #6e7dff, #5643fa); border-radius: 10px; padding: 20px;">
+                  <i class="fas fa-code fa-3x mb-3" style="color: #fff;"></i>
+                  <h3>Frontend Development</h3>
+                  <p>HTML, CSS, JavaScript, React</p>
+                  <div class="progress" style="height: 8px; border-radius: 5px;">
+                      <div class="progress-bar" style="width: 80%; background: linear-gradient(to right, #ff6ec7, #ff9a8b);" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Skill 2: Backend Development -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+              <div class="skill-card text-center" style="background: linear-gradient(135deg, #e94e77, #ff8c00); border-radius: 10px; padding: 20px;">
+                  <i class="fas fa-server fa-3x mb-3" style="color: #fff;"></i>
+                  <h3>Backend Development</h3>
+                  <p>Node.js, Express, MongoDB, SQL</p>
+                  <div class="progress" style="height: 8px; border-radius: 5px;">
+                      <div class="progress-bar" style="width: 75%; background: linear-gradient(to right, #ff9a8b, #ff6ec7);" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Skill 3: Machine Learning -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+              <div class="skill-card text-center" style="background: linear-gradient(135deg, #0f4b5c, #22c3aa); border-radius: 10px; padding: 20px;">
+                  <i class="fas fa-brain fa-3x mb-3" style="color: #fff;"></i>
+                  <h3>Machine Learning</h3>
+                  <p>Python, Scikit-learn, TensorFlow, Keras</p>
+                  <div class="progress" style="height: 8px; border-radius: 5px;">
+                      <div class="progress-bar" style="width: 70%; background: linear-gradient(to right, #00c6ff, #0072ff);" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Skill 4: Data Structures and Algorithms (DSA) -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+              <div class="skill-card text-center" style="background: linear-gradient(135deg, #d38312, #a83279); border-radius: 10px; padding: 20px;">
+                  <i class="fas fa-cogs fa-3x mb-3" style="color: #fff;"></i>
+                  <h3>Data Structures & Algorithms</h3>
+                  <p>Arrays, Linked Lists, Trees, Graphs, Dynamic Programming</p>
+                  <div class="progress" style="height: 8px; border-radius: 5px;">
+                      <div class="progress-bar" style="width: 65%; background: linear-gradient(to right, #ffafbd, #ffc3a0);" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Skill 5: Verilog -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+              <div class="skill-card text-center" style="background: linear-gradient(135deg, #d16ba5, #c3a4d8); border-radius: 10px; padding: 20px;">
+                  <i class="fas fa-microchip fa-3x mb-3" style="color: #fff;"></i>
+                  <h3>Verilog</h3>
+                  <p>Digital Circuit Design, Simulation, FPGA Programming</p>
+                  <div class="progress" style="height: 8px; border-radius: 5px;">
+                      <div class="progress-bar" style="width: 60%; background: linear-gradient(to right, #a0c4ff, #4f94d4);" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</section>
+
+    <!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-dark">
+  <div class="container">
+      <h2 class="section-title text-center text-light mb-5" data-aos="fade-up">Contact Me</h2>
+      <div class="row">
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+              <div class="about-card">
+                  <h3 class="mb-4">Let's Connect</h3>
+                  <p>If you'd like to connect or discuss a project, feel free to reach out to me through any of the following platforms:</p>
+                  <div class="d-flex justify-content-start">
+                      <!-- LinkedIn Icon -->
+                      <a href="https://www.linkedin.com/in/yashu-raj-gupta" class="social-link" target="_blank" title="LinkedIn">
+                          <i class="fab fa-linkedin-in" style="font-size: 2rem;"></i>
+                      </a>
+                      <!-- GitHub Icon -->
+                      <a href="https://github.com/Codex-Naman" class="social-link" target="_blank" title="GitHub">
+                          <i class="fab fa-github" style="font-size: 2rem;"></i>
+                      </a>
+                      <!-- Instagram Icon -->
+                      <a href="https://www.instagram.com/yashu_raj_gupta/" class="social-link" target="_blank" title="Instagram">
+                          <i class="fab fa-instagram" style="font-size: 2rem;"></i>
+                      </a>
+                      <!-- Gmail Icon (using Google Mail) -->
+                      <a href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCHrlFfJLZcbfPJTNDZKxFTBhXpGjTBdhBRdwqpgWBLlxpNlbwjDxzvdmzFGhBVhFtMNDTPg" class="social-link" target="_blank" title="Gmail">
+                          <i class="fab fa-google" style="font-size: 2rem;"></i>
+                      </a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+              <div class="about-card">
+                  <h3 class="mb-4">Contact Form</h3>
+                  <form action="#" method="POST">
+                      <div class="mb-3">
+                          <label for="name" class="form-label">Your Name</label>
+                          <input type="text" class="form-control" id="name" name="name" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="email" class="form-label">Your Email</label>
+                          <input type="email" class="form-control" id="email" name="email" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="message" class="form-label">Your Message</label>
+                          <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-info">Send Message</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+
+
+    <!-- Projects Section (Same as before but with enhanced styles) -->
+    <!-- Skills Section (Same as before but with enhanced styles) -->
+    <!-- Contact Section (Same as before but with enhanced styles) -->
+
+    <!-- Particle Effect -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      // Initialize AOS (Animate on Scroll)
+      AOS.init({
+          duration: 1200,
+          once: true,
+          offset: 100,
+          easing: 'ease-in-out-cubic'
+      });
+  
+      // Create particles effect
+      function createParticles() {
+          const particles = document.getElementById('particles');
+          
+          // Set the number of particles to create
+          const numParticles = 50; 
+  
+          // Create particles
+          for (let i = 0; i < numParticles; i++) {
+              const particle = document.createElement('div');
+              particle.classList.add('particle');
+              
+              // Randomize particle size, speed, and position
+              const size = Math.random() * 5 + 2; // Size between 2px and 7px
+              const positionX = Math.random() * window.innerWidth; // Random horizontal position
+              const positionY = Math.random() * window.innerHeight; // Random vertical position
+              const speed = Math.random() * 5 + 1; // Random speed for floating effect
+              
+              particle.style.width = `${size}px`;
+              particle.style.height = `${size}px`;
+              particle.style.left = `${positionX}px`;
+              particle.style.top = `${positionY}px`;
+              particle.style.animationDuration = `${speed + 5}s`; // Set the animation duration based on speed
+  
+              // Append the particle to the particles container
+              particles.appendChild(particle);
+          }
+      }
+  
+      // Create the particles on page load
+      window.onload = createParticles;
+  </script>
+  <!-- Footer Section -->
+  <p class="text-center text-light">YOU CAN ALSO CONNECT ON</p>
+  <div class="social-links text-center">
+      <!-- Medium Link -->
+      <a href="https://medium.com/@yashurajgupta52" class="social-link" target="_blank" title="Medium">
+          <i class="fab fa-medium"></i>
+      </a>
+  
+      <!-- Discord Link -->
+      <a href="https://discord.com/users/naman0850" class="social-link" target="_blank" title="Discord">
+          <i class="fab fa-discord"></i>
+      </a>
+  </div>
+  <style>
+    .social-links {
+        display: flex;
+        justify-content: center; /* Centers the icons horizontally */
+        margin-top: 15px; /* Adds spacing above the icons */
+    }
+  
+    .social-link {
+        font-size: 2rem; /* Increased font size for better visibility */
+        margin: 0 20px; /* Spacing between the icons */
+        color: #00e5ff; /* Default color */
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+  
+    .social-link:hover {
+        color: #fff; /* Hover effect to change color */
+        transform: scale(1.1); /* Slight scale effect for hover */
+    }
+  
+    p {
+        font-size: 1.2rem;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+  
+    footer {
+        background-color: #222;
+        padding: 20px 0;
+    }
+  
+    footer p {
+        font-size: 1rem;
+        margin-bottom: 0;
+        color: #fff; /* Ensure footer text is visible */
+    }
+  </style>
+    
+    <footer class="py-4 bg-dark text-light">
+      <div class="container text-center">
+          <p>&copy; 2025 YASHU RAJ GUPTA. All Rights Reserved.</p>
+        
+
+  
